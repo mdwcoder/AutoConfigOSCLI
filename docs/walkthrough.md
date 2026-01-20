@@ -1,30 +1,29 @@
 # AutoConfigOSCLI Walkthrough
 
-I have successfully established the "ConfigOS Core" and cleaned up the project history.
-
-## Project Structure
-- **Core**: `installer`, `catalog`, `profiles`, `providers`.
-- **Robustness**: `updater`, `doctor`, `importer/exporter`.
-- **Intelligence**: `audit` (Read-only system scan), `identity` (User profiling).
-- **Versioning**: Git history is now clean and atomic.
+I have successfully implemented Phase F: User Profiles.
 
 ## Key Features
 
-### 1. System Audit (`audit`)
-- Scans OS, CPU, RAM, Disk, and Shell.
-- Detects installed tools from the Catalog.
-- Output: Rich table or JSON.
+### 1. User Profiles
+- **Location**: `~/.autoconfigoscli/profiles/user/*.yaml`.
+- **Precedence**: User profiles override built-in profiles of the same name.
+- **Portability**: Import/Export via JSON.
 
-### 2. User Identity (`whoami`)
-- Manages user role and preferences.
-- Interactive editing via `whoami edit`.
+### 2. CLI Management (`profiles user`)
+- `profiles user create <name>`: Interactive wizard (requires FZF).
+- `profiles user list`: Shows your personal profiles.
+- `profiles user import/export`: Share profiles between machines.
+- `profiles user delete`: Automatically creates backups before deletion.
 
-### 3. Profiles & Catalog
-- Tiered profiles (`lite`, `mid`, `full`).
-- Massive catalog of modern tools (AI, DevOps, Unix).
+## Verification
+- **Import/Export**: Verified round-trip JSON data preservation.
+- **CRUD**: Created, listed, and deleted profiles successfully.
+- **Backups**: Verified backup creation upon deletion.
 
-## Verification status
-- `audit` command verified working.
-- `whoami` command verified working.
-- `install --dry-run` verified working.
-- Clean Git history established.
+## ConfigOS Core (Recap)
+- **Audit**: System readout (`audit`).
+- **Identity**: User role (`whoami`).
+- **History**: Clean Git commit log established.
+
+## Next Steps
+- **AI Integration**: Use Audit + Identity to *suggest* User Profiles (Phase G).
