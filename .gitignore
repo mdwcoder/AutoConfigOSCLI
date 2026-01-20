@@ -134,5 +134,5 @@ logs/
 backups/
 data/
 *.db
-state.*
+state.db
 config.local.*
