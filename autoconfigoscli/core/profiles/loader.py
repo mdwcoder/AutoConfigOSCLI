@@ -24,20 +24,49 @@ class ProfileLoader:
                 os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 
                 "profiles"
             )
+        
+        self.user_profiles_dir = os.path.expanduser("~/.autoconfigoscli/profiles/user")
+        if not os.path.exists(self.user_profiles_dir):
+            try:
+                os.makedirs(self.user_profiles_dir)
+            except OSError:
+                pass
 
     def list_profiles(self) -> List[str]:
-        if not os.path.exists(self.profiles_dir):
-            return []
-        return [f.replace(".yaml", "") for f in os.listdir(self.profiles_dir) if f.endswith(".yaml")]
+        profiles = set()
+        
+        # Built-in
+        if os.path.exists(self.profiles_dir):
+            for f in os.listdir(self.profiles_dir):
+                if f.endswith(".yaml"):
+                    profiles.add(f.replace(".yaml", ""))
+        
+        # User
+        if os.path.exists(self.user_profiles_dir):
+            for f in os.listdir(self.user_profiles_dir):
+                if f.endswith(".yaml"):
+                    profiles.add(f.replace(".yaml", ""))
+                    
+        return sorted(list(profiles))
 
     def load_profile(self, name: str) -> Optional[Profile]:
-        path = os.path.join(self.profiles_dir, f"{name}.yaml")
+        # Check User Profile first
+        user_path = os.path.join(self.user_profiles_dir, f"{name}.yaml")
+        if os.path.exists(user_path):
+            path = user_path
+            source = "user"
+        else:
+            path = os.path.join(self.profiles_dir, f"{name}.yaml")
+            source = "built-in"
+            
         if not os.path.exists(path):
             return None
         
         try:
             with open(path, 'r') as f:
                 data = yaml.safe_load(f)
-                return Profile(name, data)
+                p = Profile(name, data)
+                # We could add source metadata here if Profile class supported it
+                return p
         except Exception:
             return None

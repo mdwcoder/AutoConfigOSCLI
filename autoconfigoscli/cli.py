@@ -38,6 +38,31 @@ def main():
     show_parser = profiles_sub.add_parser("show", help="Show profile details")
     show_parser.add_argument("name", help="Profile name")
 
+    # Profiles User
+    user_parser = profiles_sub.add_parser("user", help="Manage User Profiles")
+    user_sub = user_parser.add_subparsers(dest="user_command", required=True)
+    
+    # User List
+    user_sub.add_parser("list", help="List user profiles")
+    
+    # User Create
+    create_parser = user_sub.add_parser("create", help="Create new user profile")
+    create_parser.add_argument("name", help="Name of new profile")
+    
+    # User Delete
+    delete_parser = user_sub.add_parser("delete", help="Delete user profile")
+    delete_parser.add_argument("name", help="Name of profile to delete")
+    delete_parser.add_argument("--yes", "-y", action="store_true", help="Confirm deletion")
+    
+    # User Export
+    export_prof = user_sub.add_parser("export", help="Export user profile to JSON")
+    export_prof.add_argument("name", help="Profile name")
+    export_prof.add_argument("--output", required=True, help="Output JSON file")
+    
+    # User Import
+    import_prof = user_sub.add_parser("import", help="Import user profile from JSON")
+    import_prof.add_argument("file", help="Input JSON file")
+
     # Install
     install_parser = subparsers.add_parser("install", help="Install a specific profile")
     install_parser.add_argument("profile", help="Name of the profile to install")
@@ -157,6 +182,112 @@ def main():
                 console.print(f"Tier: {p.tier}")
                 console.print(f"Description: {p.description}")
                 console.print(f"Packages: {', '.join(p.packages)}")
+        
+        elif args.subcommand == "user":
+            from .core.profiles.user_manager import UserProfileManager
+            from rich.prompt import Prompt, Confirm
+            from .core.manual import ManualMode
+            
+            manager = UserProfileManager()
+            
+            if args.user_command == "list":
+                profiles = []
+                for name in loader.list_profiles():
+                    if manager.is_user_profile(name):
+                         p = loader.load_profile(name)
+                         if p: profiles.append(p)
+                
+                if not profiles:
+                    console.print("No user profiles found.")
+                else:
+                    table = Table(title="User Profiles")
+                    table.add_column("Name", style="cyan")
+                    table.add_column("Tier")
+                    table.add_column("Packages")
+                    table.add_column("Description")
+                    for p in profiles:
+                        table.add_row(p.name, p.tier, str(len(p.packages)), p.description)
+                    console.print(table)
+            
+            elif args.user_command == "create":
+                name = args.name
+                if manager.is_builtin(name):
+                     console.print(f"[red]Cannot create '{name}': Conflicts with built-in profile[/red]")
+                     return
+                
+                desc = Prompt.ask("Description")
+                tier = Prompt.ask("Tier", choices=["lite", "mid", "full"], default="mid")
+                
+                console.print("[green]Select packages using FZF (TAB to multi-select, ENTER to confirm)[/green]")
+                manual = ManualMode()
+                if not manual._check_fzf():
+                    console.print("[red]FZF required for interactive selection.[/red]")
+                    return
+
+                candidates = manual._get_candidates()
+                selected_ids = manual._fzf_select(candidates)
+                
+                if not selected_ids:
+                    if not Confirm.ask("No packages selected. Create empty profile?"):
+                        return
+                
+                data = {
+                    "description": desc,
+                    "tier": tier,
+                    "tags": ["user"],
+                    "packages": selected_ids
+                }
+                
+                if manager.create(name, data):
+                     console.print(f"[bold green]Profile '{name}' created successfully![/bold green]")
+            
+            elif args.user_command == "delete":
+                if args.yes or Confirm.ask(f"Delete profile '{args.name}'?"):
+                    if manager.delete(args.name):
+                        console.print(f"[green]Deleted {args.name}[/green]")
+            
+            elif args.user_command == "export":
+                # Use manager to load raw then dump to json
+                data = manager.load_raw(args.name)
+                if not data:
+                    console.print(f"[red]Profile {args.name} not found[/red]")
+                    return
+                
+                import json
+                export_data = {
+                    "meta": {"version": "1.0", "exported_at": time.time(), "type": "user_profile"},
+                    "profile": {
+                        "name": args.name,
+                        "data": data
+                    }
+                }
+                with open(args.output, 'w') as f:
+                    json.dump(export_data, f, indent=2)
+                console.print(f"[green]Exported to {args.output}[/green]")
+            
+            elif args.user_command == "import":
+                import json
+                try:
+                    with open(args.file, 'r') as f:
+                        imported = json.load(f)
+                    
+                    if "profile" not in imported:
+                        console.print("[red]Invalid profile JSON format[/red]")
+                        return
+                    
+                    # Ask for name or use imported name?
+                    name = imported['profile']['name']
+                    # Suggest rename if exists?
+                    
+                    if manager.create(name, imported['profile']['data'], overwrite=False):
+                         console.print(f"[green]Imported profile '{name}'[/green]")
+                    else:
+                         if Confirm.ask(f"Profile '{name}' exists. Overwrite?"):
+                             manager.create(name, imported['profile']['data'], overwrite=True)
+                             console.print(f"[green]Overwritten profile '{name}'[/green]")
+
+                except Exception as e:
+                    console.print(f"[red]Import failed: {e}[/red]")
         
         else:
             profiles_parser.print_help()
