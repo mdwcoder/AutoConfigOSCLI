@@ -78,7 +78,6 @@ def main():
     
     if args.command == "audit":
         from .core.audit import SystemAuditor
-        import json
         
         auditor = SystemAuditor()
         data = auditor.run_audit()
