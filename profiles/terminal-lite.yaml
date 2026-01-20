@@ -1,0 +1,10 @@
+name: terminal-lite
+tier: lite
+description: Essential CLI tools for any developer.
+tags: [terminal, core]
+packages:
+  - git
+  - curl
+  - wget
+  - fzf
+  - htop

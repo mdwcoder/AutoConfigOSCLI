@@ -1,0 +1,6 @@
+name: ai-lite
+tier: lite
+description: Local LLM runner.
+tags: [ai, local]
+packages:
+  - ollama

@@ -1,0 +1,9 @@
+name: ai-full
+tier: full
+description: Autonomous Agents and Coding Assistants.
+tags: [ai, dev, agents]
+packages:
+  - ollama
+  - claude-code
+  - github-copilot-cli
+  - aider

@@ -1,0 +1,359 @@
+# AutoConfigOSCLI Package Catalog
+packages:
+  # --- CORE UTILS ---
+  - id: git
+    display_name: Git
+    description: Distributed version control system
+    tags: [core, dev]
+    targets:
+      linux: { provider: system, package: git }
+      macos: { provider: brew, package: git }
+
+  - id: curl
+    display_name: cURL
+    description: Data transfer tool
+    tags: [core, network]
+    targets:
+      linux: { provider: system, package: curl }
+      macos: { provider: brew, package: curl }
+
+  - id: wget
+    display_name: Wget
+    description: File retrieval tool
+    tags: [core, network]
+    targets:
+      linux: { provider: system, package: wget }
+      macos: { provider: brew, package: wget }
+
+  # --- AI & ASSISTANTS ---
+  - id: claude-code
+    display_name: Claude Code
+    description: Autonomous AI coding agent by Anthropic
+    tags: [ai, dev]
+    risk_level: high
+    targets:
+      linux: { provider: script, package: "curl -fsSL https://claude.ai/install.sh | bash" }
+      macos: { provider: script, package: "curl -fsSL https://claude.ai/install.sh | bash" }
+
+  - id: github-copilot-cli
+    display_name: GitHub Copilot CLI
+    description: AI assistant for shell commands
+    tags: [ai, shell]
+    targets:
+      linux: { provider: system, package: gh } # Often via gh extension? Or separate npm. Docs say brew or npm. Let's use npm via script or just mark unsupported on linux system if no brew? Actually docs say 'brew install copilot-cli' covers linuxbrew. We'll use npm via script as fallback or direct npm if supported. Let's strictly use npm provider if we had it, but we don't. So script.
+      macos: { provider: brew, package: copilot-cli }
+      # Script fallback for linux to use npm if node exists? No, safer to just say unsupported or use brew if linuxbrew.
+      # Let's assume user has npm for this one or use gh extension?
+      # Catalog entry says "npm install -g @github/copilot".
+      # Let's map to script for now.
+      linux: { provider: script, package: "npm install -g @github/copilot" }
+
+  - id: ollama
+    display_name: Ollama
+    description: Run LLMs locally
+    tags: [ai, llm]
+    risk_level: medium
+    targets:
+      linux: { provider: script, package: "curl -fsSL https://ollama.com/install.sh | sh" }
+      macos: { provider: brew, package: ollama }
+
+  - id: aider
+    display_name: Aider
+    description: AI pair programming in terminal
+    tags: [ai, dev]
+    targets:
+      linux: { provider: script, package: "pip install aider-chat" } # assuming pip is avail or use pipx
+      macos: { provider: script, package: "pip install aider-chat" }
+
+  # --- DEVOPS ---
+  - id: docker
+    display_name: Docker Engine
+    description: Container platform
+    tags: [devops, container]
+    targets:
+      linux: { provider: system, package: docker.io }
+      macos: { provider: brew, package: docker, cask: true }
+
+  - id: lazydocker
+    display_name: LazyDocker
+    description: TUI for Docker
+    tags: [devops, tui]
+    targets:
+      linux: { provider: script, package: "curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash" }
+      macos: { provider: brew, package: lazydocker }
+
+  - id: terraform
+    display_name: Terraform
+    description: Infrastructure as Code
+    tags: [devops, iac]
+    targets:
+      linux: { provider: system, package: terraform } # Requires repo add, generic system might fail if repo not there. User responsible for repo currently.
+      macos: { provider: brew, package: terraform }
+
+  - id: kubectl
+    display_name: Kubectl
+    description: Kubernetes CLI
+    tags: [devops, k8s]
+    targets:
+      linux: { provider: system, package: kubectl }
+      macos: { provider: brew, package: kubectl }
+      
+  - id: aws-cli
+    display_name: AWS CLI
+    description: Unified tool to manage AWS services
+    tags: [devops, cloud]
+    targets:
+      linux: { provider: system, package: awscli }
+      macos: { provider: brew, package: awscli }
+
+  # --- MODERN UNIX ---
+  - id: zoxide
+    display_name: Zoxide
+    description: Smarter cd command
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: zoxide }
+      macos: { provider: brew, package: zoxide }
+
+  - id: fzf
+    display_name: FZF
+    description: Fuzzy Finder
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: fzf }
+      macos: { provider: brew, package: fzf }
+
+  - id: bat
+    display_name: Bat
+    description: Cat clone with wings
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: bat }
+      macos: { provider: brew, package: bat }
+
+  - id: eza
+    display_name: Eza
+    description: Modern replacement for ls
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: eza }
+      macos: { provider: brew, package: eza }
+
+  - id: ripgrep
+    display_name: Ripgrep
+    description: Faster grep
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: ripgrep }
+      macos: { provider: brew, package: ripgrep }
+
+  - id: fd
+    display_name: Fd
+    description: Simple, fast alternative to find
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: fd-find } # Debian/Ubuntu name
+      macos: { provider: brew, package: fd }
+
+  - id: jq
+    display_name: Jq
+    description: JSON processor
+    tags: [shell, data]
+    targets:
+      linux: { provider: system, package: jq }
+      macos: { provider: brew, package: jq }
+
+  - id: sd
+    display_name: Sd
+    description: Sed replacement
+    tags: [shell, data]
+    targets:
+      linux: { provider: script, package: "cargo install sd" } # Fallback if no cargo?
+      macos: { provider: brew, package: sd }
+
+  - id: zellij
+    display_name: Zellij
+    description: Terminal workspace (Multiplexer)
+    tags: [shell, tui]
+    targets:
+      linux: { provider: script, package: "cargo install zellij" }
+      macos: { provider: brew, package: zellij }
+      
+  - id: starship
+    display_name: Starship
+    description: Cross-shell prompt
+    tags: [shell, prompt]
+    risk_level: medium
+    targets:
+      linux: { provider: script, package: "curl -sS https://starship.rs/install.sh | sh" }
+      macos: { provider: brew, package: starship }
+
+  - id: thefuck
+    display_name: The Fuck
+    description: Magnificient app which corrects your previous console command
+    tags: [shell, productivity]
+    targets:
+      linux: { provider: system, package: thefuck }
+      macos: { provider: brew, package: thefuck }
+
+  - id: navi
+    display_name: Navi
+    description: Interactive cheatsheet tool
+    tags: [shell, docs]
+    targets:
+      linux: { provider: script, package: "cargo install navi" }
+      macos: { provider: brew, package: navi }
+      
+  - id: asciinema
+    display_name: Asciinema
+    description: Terminal session recorder
+    tags: [shell, media]
+    targets:
+      linux: { provider: system, package: asciinema }
+      macos: { provider: brew, package: asciinema }
+
+  # --- MONITORING ---
+  - id: htop
+    display_name: htop
+    description: Interactive process viewer
+    tags: [monitoring]
+    targets:
+      linux: { provider: system, package: htop }
+      macos: { provider: brew, package: htop }
+
+  - id: ncdu
+    display_name: Ncdu
+    description: Disk usage analyzer
+    tags: [monitoring]
+    targets:
+      linux: { provider: system, package: ncdu }
+      macos: { provider: brew, package: ncdu }
+
+  - id: btop
+    display_name: Btop
+    description: Resource monitor
+    tags: [monitoring, tui]
+    targets:
+      linux: { provider: system, package: btop }
+      macos: { provider: brew, package: btop }
+
+  - id: duf
+    display_name: Duf
+    description: Disk Usage/Free utility
+    tags: [monitoring]
+    targets:
+      linux: { provider: system, package: duf }
+      macos: { provider: brew, package: duf }
+
+  - id: glances
+    display_name: Glances
+    description: Cross-platform monitoring tool
+    tags: [monitoring]
+    targets:
+      linux: { provider: system, package: glances }
+      macos: { provider: brew, package: glances }
+
+  # --- WEB & APIs ---
+  - id: gh
+    display_name: GitHub CLI
+    description: GitHub on command line
+    tags: [web, git]
+    targets:
+      linux: { provider: system, package: gh }
+      macos: { provider: brew, package: gh }
+      
+  - id: httpie
+    display_name: Httpie
+    description: User-friendly HTTP client
+    tags: [web, api]
+    targets:
+      linux: { provider: system, package: httpie }
+      macos: { provider: brew, package: httpie }
+
+  - id: postman-cli
+    display_name: Postman CLI
+    description: Command line API testing
+    tags: [web, api]
+    risk_level: medium
+    targets:
+      linux: { provider: script, package: "curl -o- https://dl-cli.pstmn.io/install/unix.sh | sh" }
+      macos: { provider: script, package: "curl -o- https://dl-cli.pstmn.io/install/unix.sh | sh" }
+
+  # --- BROWSERS ---
+  - id: brave
+    display_name: Brave Browser
+    description: Privacy-focused browser
+    tags: [web, gui]
+    targets:
+      linux: { provider: flatpak, package: com.brave.Browser }
+      macos: { provider: brew, package: brave-browser, cask: true }
+
+  - id: librewolf
+    display_name: LibreWolf
+    description: Fork of Firefox, privacy focused
+    tags: [web, gui]
+    targets:
+      linux: { provider: flatpak, package: io.gitlab.librewolf-community }
+      macos: { provider: brew, package: librewolf, cask: true }
+
+  - id: arc
+    display_name: Arc Browser
+    description: The Chrome replacement
+    tags: [web, gui]
+    supported_os: [macos]
+    targets:
+      macos: { provider: brew, package: arc, cask: true }
+      
+  # --- PRODUCTIVITY ---
+  - id: super-productivity
+    display_name: Super Productivity
+    description: To-do list and time tracker
+    tags: [productivity, gui]
+    targets:
+      linux: { provider: flatpak, package: com.superproductivity.SuperProductivity } # Assuming flatpak exists
+      macos: { provider: brew, package: super-productivity, cask: true } # Check if exists?
+
+  - id: joplin
+    display_name: Joplin
+    description: Note taking app
+    tags: [productivity, notes]
+    targets:
+      linux: { provider: script, package: "wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash" }
+      macos: { provider: brew, package: joplin }
+
+  - id: taskwarrior
+    display_name: Taskwarrior
+    description: Command line task manager
+    tags: [productivity, cli]
+    targets:
+      linux: { provider: system, package: taskwarrior }
+      macos: { provider: brew, package: taskwarrior }
+
+  # --- VERSION MANAGERS ---
+  - id: mise
+    display_name: Mise
+    description: Polyglot tool manager
+    tags: [dev, versions]
+    risk_level: medium
+    targets:
+      linux: { provider: script, package: "curl https://mise.run | sh" }
+      macos: { provider: brew, package: mise }
+
+  - id: pyenv
+    display_name: Pyenv
+    description: Python version management
+    tags: [dev, python]
+    risk_level: medium
+    targets:
+      linux: { provider: script, package: "curl https://pyenv.run | bash" }
+      macos: { provider: brew, package: pyenv }
+
+  - id: rustup
+    display_name: Rustup
+    description: Rust toolchain installer
+    tags: [dev, language]
+    risk_level: medium
+    targets:
+      linux: { provider: script, package: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y" }
+      macos: { provider: script, package: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y" }
+

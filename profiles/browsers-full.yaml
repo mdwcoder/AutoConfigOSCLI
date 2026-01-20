@@ -1,0 +1,10 @@
+name: browsers-full
+tier: full
+description: All major modern browsers (Privacy & Functionality).
+tags: [web, gui]
+packages:
+  - brave
+  - librewolf
+  - arc
+  - firefox
+  - chrome

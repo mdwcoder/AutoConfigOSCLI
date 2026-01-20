@@ -1,0 +1,10 @@
+name: devops-full
+tier: full
+description: Complete DevOps stack including Cloud CLI and IaC.
+tags: [devops, cloud, iac]
+packages:
+  - docker
+  - kubectl
+  - lazydocker
+  - terraform
+  - aws-cli

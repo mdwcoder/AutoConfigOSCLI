@@ -1,0 +1,7 @@
+name: devops-lite
+tier: lite
+description: Essential Container tools.
+tags: [devops, containers]
+packages:
+  - docker
+  - kubectl

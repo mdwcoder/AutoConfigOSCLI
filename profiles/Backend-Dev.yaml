@@ -1,0 +1,21 @@
+name: Backend-Dev
+description: Standard backend development environment
+packages:
+  common:
+    - git
+    - curl
+    - wget
+    - vim
+  apt:
+    - build-essential
+    - python3-dev
+  brew:
+    - python
+  dnf:
+    - python3-devel
+env:
+  EDITOR: vim
+  start_message: "Backend Dev Profile Loaded"
+scripts:
+  post_install:
+    - echo "Backend Profile Setup Complete"

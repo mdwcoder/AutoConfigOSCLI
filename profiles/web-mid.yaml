@@ -1,0 +1,10 @@
+name: web-mid
+tier: mid
+description: Web development tools including NodeJS and Editors.
+tags: [web, dev]
+packages:
+  - git
+  - curl
+  - nodejs
+  - vscode
+  - chrome

@@ -1,0 +1,13 @@
+name: modern-unix-mid
+tier: mid
+description: Productivity shell suite (Bat, FD, JQ, TLDR).
+tags: [shell, productivity]
+packages:
+  - zoxide
+  - fzf
+  - ripgrep
+  - eza
+  - bat
+  - fd
+  - jq
+  - starship
