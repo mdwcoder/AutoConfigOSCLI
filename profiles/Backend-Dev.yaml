@@ -1,18 +1,16 @@
 name: Backend-Dev
-description: Standard backend development environment
+description: Standard backend development environment (Fixed)
+tier: mid
+tags: [backend, dev, legacy]
 packages:
-  common:
-    - git
-    - curl
-    - wget
-    - vim
-  apt:
-    - build-essential
-    - python3-dev
-  brew:
-    - python
-  dnf:
-    - python3-devel
+  - git
+  - curl
+  - wget
+  - vim
+  - build-essential
+  - python3
+  - python3-dev
+  - pip
 env:
   EDITOR: vim
   start_message: "Backend Dev Profile Loaded"

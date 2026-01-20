@@ -1,0 +1,20 @@
+name: fullstack-python-dev-postgresql-full
+description: Heavy Fullstack (Python+Postgres).
+tier: full
+tags: [fullstack, python, postgresql, full]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - uv
+  - jetbrains-toolbox
+  - brave
+  - postgresql-server
+  - dbeaver
+  - postman-cli
+  - docker
+  - lazydocker

@@ -1,0 +1,20 @@
+name: fullstack-python-dev-mongodb-full
+description: Heavy Fullstack (Python+Mongo).
+tier: full
+tags: [fullstack, python, mongodb, full]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - uv
+  - jetbrains-toolbox
+  - brave
+  - mongosh
+  - mongodb-compass
+  - postman-cli
+  - docker
+  - lazydocker

@@ -1,0 +1,13 @@
+name: backend-python-dev-postgresql-mid
+description: Standard Python backend with PostgreSQL server.
+tier: mid
+tags: [backend, python, postgresql, mid]
+packages:
+  - git
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - vscode
+  - postgresql-server
+  - docker

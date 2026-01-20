@@ -1,0 +1,12 @@
+name: backend-python-dev-postgresql-lite
+description: Lightweight Python backend with PostgreSQL client.
+tier: lite
+tags: [backend, python, postgresql, lite]
+packages:
+  - git
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - micro
+  - postgresql-client

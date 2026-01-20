@@ -1,0 +1,11 @@
+name: fullstack-node-dev-postgresql-lite
+description: Lightweight Fullstack (Node+Postgres).
+tier: lite
+tags: [fullstack, node, postgresql, lite]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - micro
+  - postgresql-client
+  - httpie

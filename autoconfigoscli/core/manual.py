@@ -6,6 +6,7 @@ from rich.prompt import Confirm
 from .packages import ProviderManager
 from .catalog.loader import CatalogLoader
 from .catalog.resolver import PackageResolver
+from .context.history import HistoryManager
 
 console = Console()
 
@@ -13,6 +14,7 @@ class ManualMode:
     def __init__(self):
         self.provider_manager = ProviderManager()
         self.loader = CatalogLoader()
+        self.history = HistoryManager()
         self.resolver = PackageResolver(self.loader)
 
     def run(self):
@@ -107,4 +109,13 @@ class ManualMode:
                  continue
                  
              console.print(f"Installing {pkg_id} via {provider.name}...")
-             provider.install(trans.package_name)
+             success = provider.install(trans.package_name)
+             
+             self.history.record_action(
+                 action_type="install_package",
+                 actor="user",
+                 source="manual_mode",
+                 target=pkg_id,
+                 result="success" if success else "failed",
+                 details={"provider": provider.name}
+             )

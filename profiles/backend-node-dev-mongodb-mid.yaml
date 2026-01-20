@@ -1,0 +1,11 @@
+name: backend-node-dev-mongodb-mid
+description: Standard Node backend with Mongo shell.
+tier: mid
+tags: [backend, node, mongodb, mid]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - vscode
+  - mongosh
+  - docker

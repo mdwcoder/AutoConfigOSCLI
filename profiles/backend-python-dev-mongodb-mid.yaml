@@ -1,0 +1,13 @@
+name: backend-python-dev-mongodb-mid
+description: Standard Python backend with MongoDB tools.
+tier: mid
+tags: [backend, python, mongodb, mid]
+packages:
+  - git
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - vscode
+  - mongosh
+  - docker

@@ -1,0 +1,14 @@
+name: general-dev-lite
+description: Lightweight general development environment (CLI based).
+tier: lite
+tags: [general, dev, lite]
+packages:
+  - git
+  - curl
+  - wget
+  - zsh
+  - micro
+  - htop
+  - ripgrep
+  - fd
+  - bat

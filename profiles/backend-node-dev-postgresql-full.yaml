@@ -1,0 +1,13 @@
+name: backend-node-dev-postgresql-full
+description: Full Node backend with JetBrains and DB Tools.
+tier: full
+tags: [backend, node, postgresql, full]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - jetbrains-toolbox
+  - postgresql-server
+  - dbeaver
+  - docker
+  - lazydocker

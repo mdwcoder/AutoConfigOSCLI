@@ -1,0 +1,14 @@
+name: general-dev-mid
+description: Standard general development environment (VS Code + Docker).
+tier: mid
+tags: [general, dev, mid]
+packages:
+  - git
+  - curl
+  - zsh
+  - vscode
+  - docker
+  - lazydocker
+  - htop
+  - ripgrep
+  - starship

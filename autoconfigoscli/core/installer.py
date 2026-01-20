@@ -14,12 +14,15 @@ from .state import StateManager
 
 console = Console()
 
+from .context.history import HistoryManager
+
 class Installer:
     def __init__(self):
         self.state = StateManager()
         self.loader = ProfileLoader()
         self.provider_manager = ProviderManager()
         self.resolver = PackageResolver()
+        self.history = HistoryManager()
 
     def install_profile(self, profile_name: str, dry_run: bool = False, auto_yes: bool = False) -> bool:
         if not dry_run:
@@ -56,7 +59,18 @@ class Installer:
                  return False
 
         # 4. Execute
-        return self._execute_plan(plan)
+        success = self._execute_plan(plan)
+        
+        self.history.record_action(
+            action_type="install_profile",
+            actor="user",
+            source="manual" if not auto_yes else "system", # approximating
+            target=profile_name,
+            result="success" if success else "failed",
+            details={"risky_count": plan['risky_count'], "dry_run": dry_run}
+        )
+        
+        return success
 
     def _create_install_plan(self, profile: Profile) -> Dict[str, Any]:
         installable = []

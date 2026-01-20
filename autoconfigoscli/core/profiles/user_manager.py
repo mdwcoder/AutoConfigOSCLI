@@ -5,12 +5,14 @@ import time
 from typing import Dict, Any, List, Optional
 from rich.console import Console
 from .loader import ProfileLoader
+from ..context.history import HistoryManager
 
 console = Console()
 
 class UserProfileManager:
     def __init__(self):
         self.loader = ProfileLoader()
+        self.history = HistoryManager()
         self.user_dir = self.loader.user_profiles_dir
         self.backup_dir = os.path.expanduser("~/.autoconfigoscli/backups/profiles")
         os.makedirs(self.backup_dir, exist_ok=True)
@@ -48,9 +50,26 @@ class UserProfileManager:
         try:
             with open(path, 'w') as f:
                 yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+            
+            self.history.record_action(
+                action_type="create_profile",
+                actor="user",
+                source="cli",
+                target=name,
+                result="success",
+                details={"overwrite": overwrite}
+            )
             return True
         except Exception as e:
             console.print(f"[red]Failed to create profile: {e}[/red]")
+            self.history.record_action(
+                action_type="create_profile",
+                actor="user",
+                source="cli",
+                target=name,
+                result="failed",
+                details={"error": str(e)}
+            )
             return False
 
     def delete(self, name: str) -> bool:
@@ -62,9 +81,24 @@ class UserProfileManager:
         self._backup_profile(name)
         try:
             os.remove(path)
+            self.history.record_action(
+                action_type="delete_profile",
+                actor="user",
+                source="cli",
+                target=name,
+                result="success"
+            )
             return True
         except Exception as e:
             console.print(f"[red]Failed to delete profile: {e}[/red]")
+            self.history.record_action(
+                action_type="delete_profile",
+                actor="user",
+                source="cli",
+                target=name,
+                result="failed",
+                details={"error": str(e)}
+            )
             return False
             
     def load_raw(self, name: str) -> Optional[Dict[str, Any]]:

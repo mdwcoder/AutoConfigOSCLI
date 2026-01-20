@@ -1,0 +1,15 @@
+name: general-dev-full
+description: Comprehensive general development environment (JetBrains + Docker).
+tier: full
+tags: [general, dev, full]
+packages:
+  - git
+  - curl
+  - zsh
+  - jetbrains-toolbox
+  - docker
+  - lazydocker
+  - btop
+  - ripgrep
+  - starship
+  - zoxide

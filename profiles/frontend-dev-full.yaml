@@ -1,0 +1,14 @@
+name: frontend-dev-full
+description: Comprehensive frontend environment (JetBrains + Tools).
+tier: full
+tags: [frontend, dev, full]
+packages:
+  - git
+  - curl
+  - nodejs
+  - pnpm
+  - jetbrains-toolbox
+  - brave
+  - postman-cli
+  - docker
+  - lazydocker

@@ -1,0 +1,11 @@
+name: fullstack-node-dev-mongodb-lite
+description: Lightweight Fullstack (Node+Mongo).
+tier: lite
+tags: [fullstack, node, mongodb, lite]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - micro
+  - mongosh
+  - httpie

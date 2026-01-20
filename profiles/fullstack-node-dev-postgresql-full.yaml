@@ -1,0 +1,15 @@
+name: fullstack-node-dev-postgresql-full
+description: Heavy Fullstack (Node+Postgres).
+tier: full
+tags: [fullstack, node, postgresql, full]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - jetbrains-toolbox
+  - brave
+  - postgresql-server
+  - dbeaver
+  - postman-cli
+  - docker
+  - lazydocker

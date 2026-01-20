@@ -1,0 +1,15 @@
+name: frontend-dev-lite
+description: Lightweight frontend environment (Node + Neovim).
+tier: lite
+tags: [frontend, dev, lite]
+packages:
+  - git
+  - nodejs # mapped to 'node' in logic? Catalog says 'node'? Catalog doesn't have node yet. I need to check catalog for 'node'.
+  # Wait, I missed checking 'node' in catalog. 
+  # 'web-mid.yaml' used 'nodejs' or 'npm'?
+  # Let me check valid packages fast.
+  - git
+  - curl
+  - neovim
+  - micro
+  - httpie

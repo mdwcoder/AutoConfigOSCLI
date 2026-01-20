@@ -1,0 +1,10 @@
+name: backend-node-dev-mongodb-lite
+description: Lightweight Node backend with Mongo shell.
+tier: lite
+tags: [backend, node, mongodb, lite]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - micro
+  - mongosh

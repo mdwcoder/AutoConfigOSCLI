@@ -1,0 +1,16 @@
+name: backend-python-dev-mongodb-full
+description: Full Python backend with JetBrains and Compass.
+tier: full
+tags: [backend, python, mongodb, full]
+packages:
+  - git
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - uv
+  - jetbrains-toolbox
+  - mongosh
+  - mongodb-compass
+  - docker
+  - lazydocker

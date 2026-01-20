@@ -1,0 +1,17 @@
+name: fullstack-python-dev-postgresql-mid
+description: Standard Fullstack (Python+Postgres).
+tier: mid
+tags: [fullstack, python, postgresql, mid]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - vscode
+  - brave
+  - postgresql-server
+  - docker
+  - httpie

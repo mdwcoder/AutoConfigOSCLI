@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "version": "1.0",
+    "type": "user_profile"
+  },
+  "profile": {
+    "name": "manual-test-profile",
+    "data": {
+      "description": "Created via Import",
+      "tier": "mid",
+      "tags": ["user", "manual"],
+      "packages": ["git", "curl", "vim"]
+    }
+  }
+}

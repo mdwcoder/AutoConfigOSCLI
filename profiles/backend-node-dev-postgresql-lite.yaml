@@ -1,0 +1,10 @@
+name: backend-node-dev-postgresql-lite
+description: Lightweight Node backend with PostgreSQL client.
+tier: lite
+tags: [backend, node, postgresql, lite]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - micro
+  - postgresql-client

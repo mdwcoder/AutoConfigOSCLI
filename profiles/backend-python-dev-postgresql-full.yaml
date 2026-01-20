@@ -1,0 +1,16 @@
+name: backend-python-dev-postgresql-full
+description: Full Python backend with JetBrains and DB Tools.
+tier: full
+tags: [backend, python, postgresql, full]
+packages:
+  - git
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - uv
+  - jetbrains-toolbox
+  - postgresql-server
+  - dbeaver
+  - docker
+  - lazydocker

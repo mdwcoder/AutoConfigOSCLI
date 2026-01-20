@@ -1,0 +1,15 @@
+name: fullstack-python-dev-mongodb-lite
+description: Lightweight Fullstack (Python+Mongo).
+tier: lite
+tags: [fullstack, python, mongodb, lite]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - python3
+  - python3-dev
+  - pip
+  - poetry
+  - micro
+  - mongosh
+  - httpie

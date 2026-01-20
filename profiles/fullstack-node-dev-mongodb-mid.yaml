@@ -1,0 +1,13 @@
+name: fullstack-node-dev-mongodb-mid
+description: Standard Fullstack (Node+Mongo).
+tier: mid
+tags: [fullstack, node, mongodb, mid]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - vscode
+  - brave
+  - mongosh
+  - docker
+  - httpie

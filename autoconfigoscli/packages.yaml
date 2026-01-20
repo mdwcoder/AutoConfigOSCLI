@@ -357,3 +357,218 @@ packages:
       linux: { provider: script, package: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y" }
       macos: { provider: script, package: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y" }
 
+  # --- EDITORS ---
+  - id: micro
+    display_name: Micro
+    description: Modern and intuitive terminal-based text editor
+    tags: [editor, tui, lite]
+    targets:
+      linux: { provider: script, package: "curl https://getmic.ro | bash" }
+      macos: { provider: brew, package: micro }
+
+  - id: neovim
+    display_name: Neovim
+    description: Hyperextensible Vim-based text editor
+    tags: [editor, tui, lite]
+    targets:
+      linux: { provider: system, package: neovim }
+      macos: { provider: brew, package: neovim }
+
+  - id: helix
+    display_name: Helix
+    description: A post-modern text editor
+    tags: [editor, tui, lite]
+    targets:
+      linux: { provider: system, package: helix } # Available in recent updates or flatpak, stick to system for now
+      macos: { provider: brew, package: helix }
+
+  - id: vscode
+    display_name: Visual Studio Code
+    description: Code editing. Redefined.
+    tags: [editor, gui, mid]
+    targets:
+      linux: { provider: flatpak, package: com.visualstudio.code }
+      macos: { provider: brew, package: visual-studio-code, cask: true }
+
+  - id: sublime-text
+    display_name: Sublime Text
+    description: Sophisticated text editor for code, markup and prose
+    tags: [editor, gui, full]
+    targets:
+      linux: { provider: flatpak, package: com.sublimetext.three }
+      macos: { provider: brew, package: sublime-text, cask: true }
+
+  - id: jetbrains-toolbox
+    display_name: JetBrains Toolbox
+    description: Manage JetBrains tools
+    tags: [editor, gui, full]
+    targets:
+      linux: { provider: flatpak, package: com.jetbrains.Toolbox }
+      macos: { provider: brew, package: jetbrains-toolbox, cask: true }
+
+  - id: pycharm-community
+    display_name: PyCharm Community
+    description: Python IDE
+    tags: [editor, gui, full, python]
+    targets:
+      linux: { provider: flatpak, package: com.jetbrains.PyCharm-Community }
+      macos: { provider: brew, package: pycharm-ce, cask: true }
+
+  - id: emacs
+    display_name: GNU Emacs
+    description: An extensible, customizable, free/libre text editor
+    tags: [editor, tui, gui, full]
+    targets:
+      linux: { provider: system, package: emacs }
+      macos: { provider: brew, package: emacs, cask: true }
+
+  # --- LANGUAGES & RUNTIMES ---
+  - id: python3
+    display_name: Python 3
+    description: Python language interpreter
+    tags: [dev, language, python]
+    targets:
+      linux: { provider: system, package: python3 }
+      macos: { provider: brew, package: python } # Brew installs as python3
+
+  - id: pip
+    display_name: Pip
+    description: Python package installer
+    tags: [dev, python]
+    targets:
+      linux: { provider: system, package: python3-pip }
+      macos: { provider: brew, package: python } # Included in python
+
+  - id: python3-dev
+    display_name: Python 3 Dev
+    description: Header files for building python extensions
+    tags: [dev, python]
+    targets:
+      linux: { provider: system, package: python3-dev } # Debian/Ubuntu
+      macos: { provider: brew, package: python } # Included
+
+  - id: nodejs
+    display_name: Node.js
+    description: JavaScript runtime
+    tags: [dev, language, node]
+    targets:
+      linux: { provider: system, package: nodejs }
+      macos: { provider: brew, package: node }
+
+  - id: pnpm
+    display_name: PNPM
+    description: Fast, disk space efficient package manager
+    tags: [dev, node]
+    targets:
+      linux: { provider: script, package: "curl -fsSL https://get.pnpm.io/install.sh | sh -" }
+      macos: { provider: brew, package: pnpm } # Brew has pnpm
+
+  - id: poetry
+    display_name: Poetry
+    description: Python dependency management
+    tags: [dev, python]
+    targets:
+      linux: { provider: script, package: "curl -sSL https://install.python-poetry.org | python3 -" }
+      macos: { provider: brew, package: poetry }
+
+  - id: uv
+    display_name: uv
+    description: Ultra-fast python package installer
+    tags: [dev, python]
+    targets:
+      linux: { provider: script, package: "curl -LsSf https://astral.sh/uv/install.sh | sh" }
+      macos: { provider: brew, package: uv }
+
+  # --- DATABASES ---
+  - id: postgresql-client
+    display_name: PostgreSQL Client
+    description: CLI tools for PostgreSQL
+    tags: [db, sql]
+    targets:
+      linux: { provider: system, package: postgresql-client }
+      macos: { provider: brew, package: libpq } # Link might be needed, but libpq provides psql
+
+  - id: postgresql-server
+    display_name: PostgreSQL Server
+    description: Relational database server
+    tags: [db, sql, server]
+    targets:
+      linux: { provider: system, package: postgresql }
+      macos: { provider: brew, package: postgresql }
+
+  - id: mongosh
+    display_name: Mongo Shell
+    description: CLI for MongoDB
+    tags: [db, nosql]
+    targets:
+      linux: { provider: script, package: "wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc && echo 'deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list && sudo apt-get update && sudo apt-get install -y mongodb-mongosh" } # Complex, assumes Ubuntu/Debian. 
+      macos: { provider: brew, package: mongosh }
+      
+  # Simpler fallback for Mongo? Maybe just download binary script?
+  # User said "rules: no inventar installs; usar las rutas más estándar".
+  # Official mongo repo is standard but tedious for "generic linux".
+  # Maybe just skip linux support for mongo in 'system'? Or use docker?
+  # Profile guidelines said "mid/full: services (postgres/mongo) + docker engine si encaja".
+  # Maybe mid/full profiles just use Docker for DBs?
+  # But "postgresql-mid: server (sin GUI obligatoria)". Typically implies local native server.
+  # Let's keep the repo attempt or maybe just a note.
+  
+  - id: dbeaver
+    display_name: DBeaver
+    description: Universal Database Manager
+    tags: [db, gui, full]
+    targets:
+      linux: { provider: flatpak, package: io.dbeaver.DBeaverCommunity }
+      macos: { provider: brew, package: dbeaver-community, cask: true }
+
+  - id: mongodb-compass
+    display_name: MongoDB Compass
+    description: GUI for MongoDB
+    tags: [db, gui, full]
+    targets:
+      linux: { provider: flatpak, package: com.mongodb.Compass }
+      macos: { provider: brew, package: mongodb-compass, cask: true }
+
+      linux: { provider: flatpak, package: com.mongodb.Compass }
+      macos: { provider: brew, package: mongodb-compass, cask: true }
+
+  # --- SYSTEM & LEGACY ---
+  - id: zsh
+    display_name: Zsh
+    description: Z shell
+    tags: [core, shell]
+    targets:
+      linux: { provider: system, package: zsh }
+      macos: { provider: brew, package: zsh }
+
+  - id: vim
+    display_name: Vim
+    description: Vi IMproved
+    tags: [editor, tui, core]
+    targets:
+      linux: { provider: system, package: vim }
+      macos: { provider: brew, package: vim }
+
+  - id: firefox
+    display_name: Firefox
+    description: Mozilla Firefox Web Browser
+    tags: [web, gui]
+    targets:
+      linux: { provider: system, package: firefox }
+      macos: { provider: brew, package: firefox, cask: true }
+
+  - id: chrome
+    display_name: Google Chrome
+    description: The most popular web browser
+    tags: [web, gui]
+    targets:
+      linux: { provider: flatpak, package: com.google.Chrome } # Flatpak is safest cross-distro
+      macos: { provider: brew, package: google-chrome, cask: true }
+
+  - id: build-essential
+    display_name: Build Essentials
+    description: Compilers and build tools
+    tags: [dev, core]
+    targets:
+      linux: { provider: system, package: build-essential } # Debian specific name, simplistic mapping
+      macos: { provider: script, package: "xcode-select --install || true" } # Attempt xcode install

@@ -1,0 +1,15 @@
+name: fullstack-node-dev-mongodb-full
+description: Heavy Fullstack (Node+Mongo).
+tier: full
+tags: [fullstack, node, mongodb, full]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - jetbrains-toolbox
+  - brave
+  - mongosh
+  - mongodb-compass
+  - postman-cli
+  - docker
+  - lazydocker

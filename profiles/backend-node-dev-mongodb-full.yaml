@@ -1,0 +1,13 @@
+name: backend-node-dev-mongodb-full
+description: Full Node backend with JetBrains and Compass.
+tier: full
+tags: [backend, node, mongodb, full]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - jetbrains-toolbox
+  - mongosh
+  - mongodb-compass
+  - docker
+  - lazydocker

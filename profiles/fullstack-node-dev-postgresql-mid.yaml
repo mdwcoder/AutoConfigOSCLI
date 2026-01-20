@@ -1,0 +1,13 @@
+name: fullstack-node-dev-postgresql-mid
+description: Standard Fullstack (Node+Postgres).
+tier: mid
+tags: [fullstack, node, postgresql, mid]
+packages:
+  - git
+  - nodejs
+  - pnpm
+  - vscode
+  - brave
+  - postgresql-server
+  - docker
+  - httpie

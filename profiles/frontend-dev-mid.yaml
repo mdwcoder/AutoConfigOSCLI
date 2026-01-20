@@ -1,0 +1,13 @@
+name: frontend-dev-mid
+description: Standard frontend environment (VS Code + Chrome-like).
+tier: mid
+tags: [frontend, dev, mid]
+packages:
+  - git
+  - curl
+  - nodejs
+  - pnpm
+  - vscode
+  - brave
+  - httpie
+  - docker
