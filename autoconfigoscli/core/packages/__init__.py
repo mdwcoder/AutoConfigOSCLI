@@ -6,6 +6,7 @@ from ..providers.dnf import DnfProvider
 from ..providers.pacman import PacmanProvider
 from ..providers.flatpak import FlatpakProvider
 from ..providers.script import ScriptProvider
+from ..providers.winget import WingetProvider
 from ..os_detect import get_os_info
 
 class ProviderManager:
@@ -22,6 +23,8 @@ class ProviderManager:
         potential_providers = []
         if os_info.is_macos:
             potential_providers = [BrewProvider()]
+        elif os_info.is_windows:
+            potential_providers = [WingetProvider()]
         else:
             potential_providers = [
                 AptProvider(),
@@ -42,8 +45,10 @@ class ProviderManager:
     def _init_providers(self):
         # Register extensions
         # These might depend on system provider for bootstrapping
-        flatpak = FlatpakProvider(system_provider=self.system_provider)
-        self.providers[flatpak.name] = flatpak
+        os_info = get_os_info()
+        if not os_info.is_windows:
+            flatpak = FlatpakProvider(system_provider=self.system_provider)
+            self.providers[flatpak.name] = flatpak
 
         script = ScriptProvider()
         self.providers[script.name] = script

@@ -16,9 +16,12 @@ class OSInfo:
         elif self.system == "Darwin":
             self.distro_id = "macos"
             self.distro_version = platform.mac_ver()[0]
+        elif self.system == "Windows":
+            self.distro_id = "windows"
+            self.distro_version = platform.version()
         else:
-            # Explicitly fail for Windows or other OSs as per requirements
-            raise NotImplementedError(f"Unsupported Operating System: {self.system}")
+            self.distro_id = (self.system or "unknown").lower()
+            self.distro_version = self.release
 
     @property
     def is_macos(self):
@@ -27,6 +30,10 @@ class OSInfo:
     @property
     def is_linux(self):
         return self.system == "Linux"
+
+    @property
+    def is_windows(self):
+        return self.system == "Windows"
 
     def __repr__(self):
         return (f"OSInfo(system={self.system}, distro={self.distro_id}, "

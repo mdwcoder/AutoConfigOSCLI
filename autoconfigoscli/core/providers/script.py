@@ -1,4 +1,7 @@
 import subprocess
+import os
+import shlex
+import shutil
 import requests
 from rich.console import Console
 from rich.prompt import Confirm
@@ -39,13 +42,21 @@ class ScriptProvider(PackageProvider):
         try:
             # Check if it's a URL
             if package_name.startswith("http"):
+                 if os.name == "nt":
+                     console.print("[red]Remote POSIX shell scripts are not supported on Windows.[/red]")
+                     return False
                  # Download and inspect?
                  # Professional: Ask to review?
                  # For CLI speed, we stream to sh? That's dangerous.
                  # We will run it, but we warned the user.
                  
                  # curl -fsSL url | sh
-                 cmd = f"curl -fsSL '{package_name}' | sh"
+                 shell = shutil.which("sh")
+                 curl = shutil.which("curl")
+                 if not shell or not curl:
+                     console.print("[red]curl and sh are required to run remote scripts.[/red]")
+                     return False
+                 cmd = f"{shlex.quote(curl)} -fsSL {shlex.quote(package_name)} | {shlex.quote(shell)}"
             else:
                  cmd = package_name
 
